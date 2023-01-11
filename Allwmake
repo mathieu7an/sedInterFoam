@@ -1,0 +1,41 @@
+#!/bin/sh
+cd "${0%/*}" || exit                            # Run from this directory
+targetType=libso
+
+[ -d "$WM_PROJECT_DIR" ] || {
+    echo "$0: The OpenFOAM environment not set?" 1>&2
+    exit 1
+}
+if [ -f "$WM_PROJECT_DIR"/wmake/scripts/AllwmakeParseArguments ]
+then  . "$WM_PROJECT_DIR"/wmake/scripts/AllwmakeParseArguments
+fi
+
+#------------------------------------------------------------------------------
+# Build into FOAM_USER_{APPBIN,LIBBIN} unless otherwise specified with
+# -prefix or FOAM_MODULE_{APPBIN,LIBBIN} env varables
+
+moduleName="sedInterFoam"
+
+echo "========================================"
+date "+%Y-%m-%d %H:%M:%S %z" 2>/dev/null || echo "date is unknown"
+echo "Starting compile of $moduleName with ${WM_PROJECT_DIR##*/}"
+echo "  $WM_COMPILER $WM_COMPILER_TYPE compiler"
+echo "  ${WM_OPTIONS}, with ${WM_MPLIB} ${FOAM_MPI}"
+echo "  prefix = ${FOAM_MODULE_PREFIX:-default (user)}"
+echo
+
+#------------------------------------------------------------------------------
+
+TurbulenceModels/Allwmake $targetType $*
+solver/Allwmake $targetType $*
+
+
+# Some summary information
+echo
+date "+%Y-%m-%d %H:%M:%S %z" 2>/dev/null || echo "date is unknown"
+echo "========================================"
+echo "  Finished compile of $moduleName with ${WM_PROJECT_DIR##*/}"
+echo "  $WM_COMPILER $WM_COMPILER_TYPE compiler"
+echo "  ${WM_OPTIONS}, with ${WM_MPLIB} ${FOAM_MPI}"
+echo
+#------------------------------------------------------------------------------

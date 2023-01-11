@@ -1,0 +1,76 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.4.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers
+{
+ p_rgh
+    {
+        solver          PCG;
+        preconditioner  DIC;
+        tolerance       1e-07;
+        relTol          0.05;
+    }
+
+    p_rghFinal
+    {
+        $p_rgh;
+        relTol          0;
+    }
+
+    "(alpha.*|gamma|Theta|ps_new_value|alphasPlastic|W)"
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-8;
+        relTol          0;
+        nLimiterIter    5;
+    }
+    "(alpha.*Final|gammaFinal|ThetaFinal|psFinal|alphasPlasticFinal|WFinal)"
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-8;
+        relTol          0;
+        nLimiterIter    5;
+    }
+        U
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-06;
+        relTol          0;
+    }
+}
+
+PIMPLE
+{
+    momentumPredictor 0;
+    nOuterCorrectors  1;
+    nCorrectors     3;
+    nNonOrthogonalCorrectors 0;
+    correctAlpha    0;
+    nAlphasCorr     1;
+    nGammaCorr     1;
+    nAlphaSubCycles 1;
+    pRefCell        0;
+    pRefValue       0;
+    MULESCorr       yes;
+    nLimiterIter    5;
+    cAlpha         1;
+}
+
+// ************************************************************************* //

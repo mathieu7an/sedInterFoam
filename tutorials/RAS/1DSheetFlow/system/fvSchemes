@@ -1,0 +1,82 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.7.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSchemes;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+ddtSchemes
+{
+    default         Euler implicit;
+}
+
+gradSchemes
+{
+    default         Gauss linear;
+}
+
+divSchemes
+{
+    default         none;
+// alphaEqn
+    div(phi,alphas)  Gauss limitedLinear01 1;
+    div(phir,alphas) Gauss limitedLinear01 1;
+    div(phir,gamma) Gauss linear;
+    div(phi,gamma) Gauss vanLeer;
+// UEqn
+    div((rho*phi.sol),U.sol)    Gauss limitedLinearV 1;
+    div(phi.sol,U.sol) Gauss limitedLinearV 1;
+    div(rhoPhi,U.flu)    Gauss limitedLinearV 1;
+    div(phi.flu,U.flu) Gauss limitedLinearV 1;
+    div(phiRs,Us)   Gauss limitedLinear 1;
+    div(phiRf,Uf)   Gauss limitedLinear 1;
+    div((rho*Rcs)) Gauss linear;
+    div((rhof*Rcf)) Gauss linear;
+// pEqn
+    div(alphas,nu)   Gauss linear;
+// k and EpsilonEqn
+    div(phi.flu,k.flu)     Gauss limitedLinear 1;
+    div(phi.flu,epsilon.flu) Gauss limitedLinear 1;
+    div(phif,omega) Gauss limitedLinear 1;
+// ThetaEqn
+    div(phi,Theta)  Gauss limitedLinear 1;
+// alphaPlastic
+    div(phis,alphasPlastic)  Gauss limitedLinear01 1;
+// pa
+    div(phis,ps_new_value)  Gauss limitedLinear 1;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear corrected;
+}
+
+interpolationSchemes
+{
+    default  linear;
+}
+
+snGradSchemes
+{
+    default         corrected;
+}
+
+fluxRequired
+{
+    default         no;
+    p_rgh               ;
+    gamma;
+}
+
+
+// ************************************************************************* //
