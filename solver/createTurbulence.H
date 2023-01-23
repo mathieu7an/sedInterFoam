@@ -28,8 +28,8 @@ volScalarField alphasEff
         IOobject::groupName("alphasEff", "sol"),
         runTime.timeName(),
         mesh,
-        IOobject::READ_IF_PRESENT,
-        IOobject::AUTO_WRITE
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
     ),
     mesh,
     dimensionedScalar(dimless, Zero)
@@ -119,7 +119,7 @@ volScalarField nuEffs
         runTime.timeName(),
         mesh,
         IOobject::NO_READ,
-        IOobject::AUTO_WRITE
+        IOobject::NO_WRITE
     ),
     mesh,
     dimensionedScalar("zero", dimensionSet(0, 2, -1, 0, 0), 0.0)
@@ -148,7 +148,7 @@ volScalarField nuEfff
         runTime.timeName(),
         mesh,
         IOobject::NO_READ,
-        IOobject::AUTO_WRITE
+        IOobject::NO_WRITE
     ),
     mesh,
     dimensionedScalar("zero", dimensionSet(0, 2, -1, 0, 0), 0.0)

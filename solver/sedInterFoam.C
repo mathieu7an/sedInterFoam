@@ -56,6 +56,7 @@ Date
 #include "slipFvPatchFields.H"
 #include "partialSlipFvPatchFields.H"
 #include "alphaContactAngleTwoPhaseFvPatchScalarField.H"
+#include "relaxationZone.H"
 
 #include "dragModel.H"
 #include "phaseModel.H"
@@ -80,6 +81,7 @@ int main(int argc, char *argv[])
     #include "createControl.H"
 
     #include "readGravity.H"
+    #include "readWaveProperties.H"
     #include "createFields.H"
     #include "createTurbulence.H"
     #include "createFvOptions.H"
@@ -144,13 +146,16 @@ int main(int argc, char *argv[])
 //      Apply a ramp in time on the gravity acceleration
         #include "gravityRamp.H"
 
-        #include "gammaEqn.H"
+        //#include "gammaEqn.H"
 
 //      Pressure-velocity PIMPLE corrector loop
         while (pimple.loop())
         {
 //          Solve for mass conservation equations
             #include "alphaEqn.H"
+            relaxing.correct();
+
+            #include "updateSurfaceTension.H"
 
 //          Compute lift and drag coefficients
             #include "liftDragCoeffs.H"

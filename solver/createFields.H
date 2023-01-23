@@ -280,7 +280,7 @@ volScalarField rhof
          runTime.timeName(),
          mesh,
          IOobject::NO_READ,
-         IOobject::AUTO_WRITE
+         IOobject::NO_WRITE
     ),
     (alphag*rhog + alphaw*rhow)/alphaf
 );
@@ -307,7 +307,7 @@ volScalarField muf
          runTime.timeName(),
          mesh,
          IOobject::NO_READ,
-         IOobject::AUTO_WRITE
+         IOobject::NO_WRITE
     ),
     (alphaw*rhow*nuw + alphag*rhog*nug)
 );
@@ -320,7 +320,7 @@ volScalarField nuf
          runTime.timeName(),
          mesh,
          IOobject::NO_READ,
-         IOobject::AUTO_WRITE
+         IOobject::NO_WRITE
     ),
     muf/(rhof*alphaf)
 );
@@ -986,6 +986,7 @@ dimensionedScalar Ufall
    "Ufall",
    dimensionSet(0, 1, -1, 0, 0, 0, 0),
    max(UfallField).value()
+   //max(Uf).value()
 );
 
 // Initalize particle pressure model
@@ -1156,4 +1157,7 @@ if (p_rgh.needReference())
     );
     p_rgh = p - rhof*gh;
 }
+
+relaxationZone relaxing(mesh, Uf, gamma);
+
 Info<<"end of createFields"<<endl;

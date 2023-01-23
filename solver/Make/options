@@ -25,7 +25,12 @@ EXE_INC = \
     -IinterfacialModels/lnInclude \
     -IphaseModel/lnInclude \
     -IppModel/lnInclude \
-    -Iaveraging
+    -Iaveraging \
+    -DEXTBRANCH=0 \
+    -DXVERSION=$(WAVES_XVERSION) \
+    -I$(WAVES_SRC)/waves2Foam/lnInclude \
+    -I$(WAVES_SRC)/waves2FoamSampling/lnInclude \
+    -I$(WAVES_GSL_INCLUDE)
 
 EXE_LIBS = \
     -L$(FOAM_USER_LIBBIN)\
@@ -42,4 +47,7 @@ EXE_LIBS = \
     -lturbulenceModels \
     -linterfaceProperties \
     -lincompressibleTurbulenceModels \
-    -ltwoPhaseTurbulenceModels
+    -ltwoPhaseTurbulenceModels \
+    -L$(WAVES_LIBBIN) \
+    -lwaves2Foam \
+

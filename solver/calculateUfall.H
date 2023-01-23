@@ -76,7 +76,7 @@ volScalarField UfallField
 );
 
 scalar iter=0;
-while ((err > eps)||(iter < 10))
+/*while ((err > eps)||(iter < 10))
 {
     iter = iter + 1;
     UfallField = mag(gravity)*(rhos-rhow)/drags->K(Ufalltmp);
@@ -90,7 +90,7 @@ if (iter == 10)
 {
     Info << "Maximum number of iterations reached for settling "
          << "velocity calculation"<<endl;
-}
+}*/
 Info << "Settling velocity in quiescent water: Ufall="
      << max(UfallField.internalField()).value()
      << " with residual:" << max(err).value() << endl;

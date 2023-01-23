@@ -41,26 +41,20 @@
                     phi,
                     upwind<scalar>(mesh, phi)
                 ).fvmDiv(phi, gamma)
-            /*+ fv::gaussConvectionScheme<scalar>
+            + fv::gaussConvectionScheme<scalar>
                 (
                     mesh,   
                     fvc::flux(-phir, alphas, gammarScheme),
                     upwind<scalar>(mesh, fvc::flux(-phir, alphas, gammarScheme))
-                ).fvmDiv(fvc::flux(-phir, alphas, gammarScheme), gamma)*/
-            //-gamma*fvc::div(Uf)
-            //- fvm::Sp(fvc::div(Uf)/(1-alphas), gamma)
+                ).fvmDiv(fvc::flux(-phir, alphas, gammarScheme), gamma)
+            -gamma*fvc::div(Uf)
+            //- fvm::Sp(fvc::div(Uf), gamma)
             );
 
             gammaEqn.solve();
             //gamma.min(1.0);
             //gamma.max(0);
             //alphaw = gamma*alphaf;
-
-            Info<< "Carrier phase volume fraction = "
-                << alphaw.weightedAverage(mesh.Vsc()).value()
-                << "  Min(" << alphaw.name() << ") = " << min(alphaw).value()
-                << "  Max(" << alphaw.name() << ") = " << max(alphaw).value()
-                << endl;
 
             tmp<surfaceScalarField> tgammaPhiUD(gammaEqn.flux());
             gammaPhi = tgammaPhiUD();
@@ -111,12 +105,12 @@
                     gamma,
                     gammarScheme
                 )
-            /*+ fvc::flux
+            + fvc::flux
                 (
                 fvc::flux(-phir, alphas, gammarScheme),
                     gamma,
                     gammarScheme
-                )*/
+                )
             );
 
             if (MULESCorr)
@@ -144,7 +138,7 @@
                 MULES::explicitSolve(geometricOneField(), gamma, phi, gammaPhi, oneField(), zeroField());
             }
 
-            //solve(fvm::ddt(gamma) + fvc::div(gammaPhi) - fvm::Sp(fvc::div(Uf)/(1-alphas), gamma));
+            //solve(fvm::ddt(gamma) + fvc::div(gammaPhi) - fvm::Sp(fvc::div(Uf), gamma));
 
             //gamma.min(1.0);
             //gamma.max(0);
@@ -176,12 +170,11 @@
     // Construct the comp   lete mass flux
     rhoPhi =
         gammaPhi*(rhow-rhog)
-        + phif*rhog 
-        + fvc::flux(-phir, gamma*alphas, gammarScheme)*(rhow-rhog);
+        + phif*rhog;
+        //+ fvc::flux(-phir, gamma*alphas, gammarScheme)*(rhow-rhog);
 
     muf = (alphaw*rhow*nuw + alphag*rhog*nug)/alphaf;
     nuf = (alphaw*nuw + alphag*nug)/alphaf;
     rhof = (alphaw*rhow + alphag*rhog)/alphaf;
-    rho = (alphaw*rhow + alphag*rhog + alphas*rhos);
 
 }
