@@ -146,16 +146,15 @@ int main(int argc, char *argv[])
 //      Apply a ramp in time on the gravity acceleration
         #include "gravityRamp.H"
 
-        //#include "gammaEqn.H"
-
 //      Pressure-velocity PIMPLE corrector loop
         while (pimple.loop())
         {
 //          Solve for mass conservation equations
-            #include "alphaEqn.H"
-            relaxing.correct();
+            #include "gammaEqn.H"
 
-            #include "updateSurfaceTension.H"
+            #include "alphaEqn.H"
+
+            //#include "updateSurfaceTension.H"
 
 //          Compute lift and drag coefficients
             #include "liftDragCoeffs.H"

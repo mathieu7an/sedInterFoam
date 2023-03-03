@@ -243,6 +243,19 @@ volScalarField gamma
     mesh
 );
 
+volScalarField voidFrac
+(
+    IOobject
+    (
+        "voidFrac",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    1.0-gamma
+);
+
 alphaw = gamma*alphaf;
 alphag = 1.0 - alphaw - alphas;
 
@@ -646,9 +659,22 @@ volVectorField U
         runTime.timeName(),
         mesh,
         IOobject::NO_READ,
-        IOobject::NO_WRITE
+        IOobject::AUTO_WRITE
     ),
     alphas*Us + alphaf*Uf + alphag*Ug
+);
+
+volVectorField Urela
+(
+    IOobject
+    (
+        "Urela",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    U - Uf
 );
 
 Info<< "Calculating face flux field phi\n" << endl;

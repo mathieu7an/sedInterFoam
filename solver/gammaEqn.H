@@ -2,6 +2,8 @@
     word gammaScheme("div(phi,gamma)");
     word gammarScheme("div(phir,gamma)");
 
+    #include "updateSurfaceTension.H"
+
     surfaceScalarField phir("phir", phis - phif);
     // Standard face-flux compression coefficient
     surfaceScalarField phic(cAlpha*mag(phi/mesh.magSf()));
@@ -47,8 +49,9 @@
                     fvc::flux(-phir, alphas, gammarScheme),
                     upwind<scalar>(mesh, fvc::flux(-phir, alphas, gammarScheme))
                 ).fvmDiv(fvc::flux(-phir, alphas, gammarScheme), gamma)
-            -gamma*fvc::div(Uf)
-            //- fvm::Sp(fvc::div(Uf), gamma)
+            ==
+            //-gamma*fvc::div(Uf)
+            fvm::Sp(fvc::div(phif), gamma)
             );
 
             gammaEqn.solve();
@@ -69,22 +72,23 @@
             // Cache the upwind-flux
             tgammaPhiCorr0 = tgammaPhiUD;
 
-            //alphaf = min(max(1.0-alphas, scalar(0)), scalar(1.0));
-			//alphaw = alphaf*gamma;
-			//alphag = min(max(alphaf*(1.0-gamma), scalar(0)), scalar(1.0));
+            alphaf = min(max(1.0-alphas, scalar(0)), scalar(1.0));
+			alphaw = alphaf*gamma;
+			alphag = min(max(alphaf*(1.0-gamma), scalar(0)), scalar(1.0));
 
             //Replace air in water-sand interface by water
             //if(addWater)
             //{
-            //    alphaw += alphag*(pos(alphas-alphag)*pos(alphaw-0.1)*pos(0.99-alphaw));
+                //alphaw += alphag*(pos(alphas-alphag)*pos(alphaw-0.1)*pos(0.99-alphaw));
             //}
 
             //Remove air from water-sand interface
             //if(removeAir)
             //{
-            //    alphag *= (1-pos(alphas-alphag)*pos(alphaw-0.1)*pos(0.99-alphaw));
+                //alphag *= (1-pos(alphas-alphag)*pos(alphaw-0.1)*pos(0.99-alphaw));
             //}
         }
+
         for (int aCorr=0; aCorr<nGammaCorr; aCorr++)
         {
             #include "updateSurfaceTension.H"
@@ -167,14 +171,13 @@
 		alphaw = alphaf;
 		alphag = 0.0;
 	}
-    // Construct the comp   lete mass flux
+    // Construct the complete mass flux
     rhoPhi =
         gammaPhi*(rhow-rhog)
-        + phif*rhog;
-        //+ fvc::flux(-phir, gamma*alphas, gammarScheme)*(rhow-rhog);
+        + phif*rhog
+        + fvc::flux(-phir, gamma*alphas, gammarScheme)*(rhow-rhog);
 
     muf = (alphaw*rhow*nuw + alphag*rhog*nug)/alphaf;
     nuf = (alphaw*nuw + alphag*nug)/alphaf;
     rhof = (alphaw*rhow + alphag*rhog)/alphaf;
-
 }

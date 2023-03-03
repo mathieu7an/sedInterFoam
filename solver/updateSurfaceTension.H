@@ -1,27 +1,27 @@
 
 // Cell gradient of alphaw
-volVectorField gradAlphaw(fvc::grad(alphaw));;
+volVectorField gradGamma(fvc::grad(gamma));;
 
 // Interpolated face-gradient of alphaw
-surfaceVectorField gradAlphawf(fvc::interpolate(gradAlphaw));
+surfaceVectorField gradGammaf(fvc::interpolate(gradGamma));
 
 // Face unit interface normal
-surfaceVectorField  nHatfv(gradAlphawf/(mag(gradAlphawf) + deltaN));
+surfaceVectorField  nHatfv(gradGammaf/(mag(gradGammaf) + deltaN));
 
-const volScalarField::Boundary& alphawbound = alphaw.boundaryField();
+const volScalarField::Boundary& gammabound = gamma.boundaryField();
 //const volScalarField::Boundary& alphasbound = alphas.boundaryField();
-const volScalarField::Boundary& alphagbound = alphag.boundaryField();
+const volScalarField::Boundary& voidFracbound = voidFrac.boundaryField();
 const volVectorField::Boundary& Ubound = U.boundaryField();
 
 const fvBoundaryMesh& boundary = mesh.boundary();
 
 forAll(boundary, patchi)
 {
-    if (isA<alphaContactAngleTwoPhaseFvPatchScalarField>(alphawbound[patchi]))
+    if (isA<alphaContactAngleTwoPhaseFvPatchScalarField>(gammabound[patchi]))
     {
         const alphaContactAngleTwoPhaseFvPatchScalarField& acap =
             refCast<const alphaContactAngleTwoPhaseFvPatchScalarField>
-            (alphagbound[patchi]);
+            (voidFracbound[patchi]);
 
         fvsPatchVectorField& nHatp = nHatfv.boundaryFieldRef()[patchi];
 
@@ -63,6 +63,6 @@ nHatf = nHatfv & mesh.Sf();
 Kg = -fvc::div(nHatf);
 
 //volScalarField limitedAlphas(max(alphas, scalar(0)));
-volScalarField limitedAlphag(max(alphag, scalar(0)));
+volScalarField limitedVoidFrac(max(voidFrac, scalar(0)));
 
-sigma = (limitedAlphag*sigmagf)/(limitedAlphag + SMALL);
+sigma = (limitedVoidFrac*sigmagf)/(limitedVoidFrac + SMALL);
