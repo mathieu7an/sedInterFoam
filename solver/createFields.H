@@ -953,8 +953,8 @@ volScalarField delta
 );
 
 Info<< "Calculating field g.h\n" << endl;
-volScalarField gh("gh", gravity & mesh.C());
-surfaceScalarField ghf("ghf", gravity & mesh.Cf());
+volScalarField gh("gh", gravity & (mesh.C() - referencePoint));
+surfaceScalarField ghf("ghf", gravity & (mesh.Cf() - referencePoint));
 
 // Read interfacial properties
 
