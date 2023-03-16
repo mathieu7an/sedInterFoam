@@ -153,6 +153,7 @@ int main(int argc, char *argv[])
             #include "gammaEqn.H"
 
             #include "alphaEqn.H"
+            relaxing.correct();
 
             //#include "updateSurfaceTension.H"
 
