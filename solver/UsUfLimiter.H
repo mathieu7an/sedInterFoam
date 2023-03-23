@@ -26,17 +26,17 @@ if (ClipUs.value()==1)
     {
         if (alphas[cell]<alphasSmall.value())
         {
-            Us[cell] = Uf[cell];
+            Usclip[cell] = Uf[cell];
         }
     }
     forAll(alphasf, face)
     {
         if (alphasf[face]<alphasSmall.value())
         {
-            phis[face] = phif[face];
+            phisclip[face] = phif[face];
         }
     }
-    phi = alphasf*phis + (1-alphasf)*phif;
+    //phi = alphasf*phis + (1-alphasf)*phif;
 }
 
 if (InitFreeze.value()==1)

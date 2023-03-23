@@ -197,8 +197,10 @@ autoPtr<phaseModel> phaseg = phaseModel::New
 );
 
 volVectorField& Us = phases->U();
+volVectorField& Usclip = Us;
 volScalarField& alphas = phases->alpha();
 surfaceScalarField& phis = phases->phi();
+surfaceScalarField& phisclip = phis;
 const dimensionedScalar& rhos = phases->rho();
 const dimensionedScalar& nus = phases->nu();
 
@@ -955,6 +957,8 @@ volScalarField delta
 Info<< "Calculating field g.h\n" << endl;
 volScalarField gh("gh", gravity & (mesh.C() - referencePoint));
 surfaceScalarField ghf("ghf", gravity & (mesh.Cf() - referencePoint));
+//volScalarField gh("gh", gravity & mesh.C());
+//surfaceScalarField ghf("ghf", gravity & mesh.Cf());
 
 // Read interfacial properties
 

@@ -174,8 +174,8 @@
     // Construct the complete mass flux
     rhoPhi =
         gammaPhi*(rhow-rhog)
-        + phif*rhog
-        + fvc::flux(-phir, gamma*alphas, gammarScheme)*(rhow-rhog);
+        + phif*rhog;
+        //+ fvc::flux(-phir, gamma*alphas, gammarScheme)*(rhow-rhog);
 
     muf = (alphaw*rhow*nuw + alphag*rhog*nug)/alphaf;
     nuf = (alphaw*nuw + alphag*nug)/alphaf;
