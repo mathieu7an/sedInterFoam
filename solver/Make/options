@@ -49,5 +49,5 @@ EXE_LIBS = \
     -lincompressibleTurbulenceModels \
     -ltwoPhaseTurbulenceModels \
     -L$(WAVES_LIBBIN) \
-    -lwaves2Foam \
+    -lwaves2Foam 
 

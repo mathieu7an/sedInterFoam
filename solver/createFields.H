@@ -781,6 +781,8 @@ tmp<surfaceScalarField> tgammaPhiCorr0;
 //The following two flags are used to solve the stability problem which occurs when air is entrained
 //on water-sediment interface. It may cause mass conservation error which can be large in some cases 
 
+Switch waves(transportProperties.lookupOrDefault("waves2Foam", false));
+
 //Flag to remove air from water-sand interface
 Switch removeAir(transportProperties.lookupOrDefault("removeAir", false));
 
@@ -955,10 +957,14 @@ volScalarField delta
 );
 
 Info<< "Calculating field g.h\n" << endl;
-volScalarField gh("gh", gravity & (mesh.C() - referencePoint));
-surfaceScalarField ghf("ghf", gravity & (mesh.Cf() - referencePoint));
-//volScalarField gh("gh", gravity & mesh.C());
-//surfaceScalarField ghf("ghf", gravity & mesh.Cf());
+
+volScalarField gh("gh", gravity & mesh.C());
+surfaceScalarField ghf("ghf", gravity & mesh.Cf());
+if (waves)
+{
+    gh = gravity & (mesh.C() - referencePoint);
+    ghf = gravity & (mesh.Cf() - referencePoint);
+}
 
 // Read interfacial properties
 
