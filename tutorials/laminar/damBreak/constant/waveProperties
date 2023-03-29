@@ -1,47 +1,30 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  2.1.0                                 |
-|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|  \\    /   O peration     | Version:  1.5                                   |
+|   \\  /    A nd           | Web:      http://www.OpenFOAM.org               |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volScalarField;
-    location    "10";
-    object      pa;
+    class       dictionary;
+    object      environmentalProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [1 -1 -2 0 0 0 0];
+timeShift       0.0;
 
-internalField   uniform 0;
+seaLevel	0.00;
 
-boundaryField
-{
-    inlet
-    {
-        type            cyclic;
-    }
-    outlet
-    {
-        type            cyclic;
-    }
-    top
-    {
-        type            slip;
-    }
-    bottom
-    {
-        type            zeroGradient;
-    }
-    frontAndBackPlanes
-    {
-        type            empty;
-    }
-}
+// A list of the relaxation zones in the simulation. The parameters are given
+// in <name>Coeffs below.
 
+relaxationNames ();
+
+initializationName init;
+
+pName p_rgh;
 
 // ************************************************************************* //

@@ -197,10 +197,8 @@ autoPtr<phaseModel> phaseg = phaseModel::New
 );
 
 volVectorField& Us = phases->U();
-volVectorField Usclip = phases->U();
 volScalarField& alphas = phases->alpha();
 surfaceScalarField& phis = phases->phi();
-surfaceScalarField phisclip = phases->phi();
 const dimensionedScalar& rhos = phases->rho();
 const dimensionedScalar& nus = phases->nu();
 
@@ -691,6 +689,37 @@ surfaceScalarField phi
         IOobject::NO_WRITE
     ),
     fvc::flux(U)
+);
+
+Switch limitTimeStepUr
+(
+    runTime.controlDict().lookupOrDefault("limitTimeStepUr", true)
+);
+
+surfaceScalarField phisclip
+(
+    IOobject
+    (
+        "phisclip",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    phis
+);
+
+volVectorField Usclip
+(
+    IOobject
+    (
+        "Usclip",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    Us
 );
 
 #include "UsUfLimiter.H"

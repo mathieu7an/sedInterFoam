@@ -45,8 +45,9 @@ solvers
         preconditioner  DILU;
         tolerance       1e-10;
         relTol          0;
+        nLimiterIter    5;
     }
-    "(alpha.*Final|gamma|psFinal|alphasPlasticFinal)"
+    "(alpha.*Final|gammaFinal|psFinal|alphasPlasticFinal)"
     {
         solver          PBiCG;
         preconditioner  DILU;
@@ -79,6 +80,7 @@ PIMPLE
     correctAlpha    1;
     nAlphasCorr     1;
     nGammaCorr     1;
+    MULESCorr      1;
     nAlphaSubCycles 0;
     pRefCell        0;
     pRefValue       0;

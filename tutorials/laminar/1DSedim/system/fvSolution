@@ -45,6 +45,7 @@ solvers
         preconditioner  DILU;
         tolerance       1e-9;
         relTol          0;
+	nLimiterIter    5;
     }
     "(alpha.*Final|gammaFinal|ThetaFinal|psFinal|alphasPlasticFinal)"
     {
@@ -52,6 +53,7 @@ solvers
         preconditioner  DILU;
         tolerance       1e-9;
         relTol          0;
+	nLimiterIter    5;
     }
 }
 
@@ -61,7 +63,8 @@ PIMPLE
     nOuterCorrectors  1;
     nCorrectors     1;
     nNonOrthogonalCorrectors 0;
-    correctAlpha    0;
+    MULESCorr       1;
+    correctAlpha    1;
     nAlphasCorr     1;
     nGammaCorr     1;
     nAlphaSubCycles 0;

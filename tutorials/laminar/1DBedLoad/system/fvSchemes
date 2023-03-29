@@ -29,10 +29,10 @@ divSchemes
 {
     default         none;
 // alphaEqn
-    div(phi,alphas)  Gauss upwind;//limitedLinear01 1;
-    div(phir,alphas) Gauss upwind;//limitedLinear01 1;
-    div(phir,gamma) Gauss upwind;
-    div(phi,gamma) Gauss upwind;
+    div(phi,alphas)  Gauss limitedLinear01 1;
+    div(phir,alphas) Gauss limitedLinear01 1;
+    div(phir,gamma) Gauss linear;
+    div(phi,gamma) Gauss vanLeer;
 // UEqn
     div(phi.sol,U.sol) Gauss limitedLinearV 1;
     div(phi.flu,U.flu) Gauss limitedLinearV 1;

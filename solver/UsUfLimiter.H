@@ -24,6 +24,7 @@ if (ClipUs.value()==1)
     surfaceScalarField alphasf(fvc::interpolate(alphas));
     forAll(alphas, cell)
     {
+        Usclip[cell] = Us[cell];
         if (alphas[cell]<alphasSmall.value())
         {
             Usclip[cell] = Uf[cell];
@@ -31,6 +32,7 @@ if (ClipUs.value()==1)
     }
     forAll(alphasf, face)
     {
+        phisclip[face] = phis[face];
         if (alphasf[face]<alphasSmall.value())
         {
             phisclip[face] = phif[face];

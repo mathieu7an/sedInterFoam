@@ -47,6 +47,11 @@ internalField   #codeStream
             if (y < 0.049)
             {
                 alpha_a[i] = 0.5;
+		//alpha_a[i] = 0.0;
+            }
+	    else if (y > 0.07)
+            {
+		alpha_a[i] = 0.0;
             }
             else
             {

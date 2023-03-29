@@ -46,7 +46,7 @@ basepath = '../laminar/'
 sol = basepath + case + '/'
 
 Nx = 1
-Ny = 120
+Ny = 240
 Nz = 1
 
 eps_file = sol + case + '.eps'

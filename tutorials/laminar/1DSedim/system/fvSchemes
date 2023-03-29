@@ -79,7 +79,8 @@ fluxRequired
     default         no;
     alpha.sol;
     alpha.wat;
-    p_rgh               ;
+    p_rgh;
+    gamma;
 }
 
 

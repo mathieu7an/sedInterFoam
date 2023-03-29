@@ -30,6 +30,9 @@ License
     )*runTime.deltaTValue();
 
     Info<< "Max Ur Courant Number = " << UrCoNum << endl;
-
-    CoNum = max(CoNum, UrCoNum);
+    
+    if (limitTimeStepUr)
+    {
+        CoNum = max(CoNum, UrCoNum);
+    }
 }
