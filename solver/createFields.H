@@ -197,10 +197,10 @@ autoPtr<phaseModel> phaseg = phaseModel::New
 );
 
 volVectorField& Us = phases->U();
-volVectorField& Usclip = Us;
+volVectorField Usclip = phases->U();
 volScalarField& alphas = phases->alpha();
 surfaceScalarField& phis = phases->phi();
-surfaceScalarField& phisclip = phis;
+surfaceScalarField phisclip = phases->phi();
 const dimensionedScalar& rhos = phases->rho();
 const dimensionedScalar& nus = phases->nu();
 

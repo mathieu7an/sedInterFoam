@@ -295,6 +295,8 @@ License
         p_rgh = p - rhof*gh;
     }
     // Apply velocity limiters and correct boundary conditions
+    Usclip = Us;
+    phisclip = phis;
     #include "UsUfLimiter.H"
     Us.correctBoundaryConditions();
     // Update mixture velocity
