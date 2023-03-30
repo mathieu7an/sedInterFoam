@@ -8,7 +8,7 @@ Tutorial for using RANS with sedInterFoam (Simulation of the experimental config
 - extrudeMesh
 
 2) Rename patch for 2D case:
-- replace "emptyy" by "empty" in file "constant/polyMesh/boundary" for patches "cfrontWall" and "cbackWall"
+- replace "emptyy" by "empty" in file "constant/polyMesh/boundary" for patches "frontandback1" and "frontandback2"
 
 3) Initialize fields:
 - cp -r 0_org 0
