@@ -1,0 +1,97 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.7.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      transportProperties;
+}
+// * * * * * * * * * * * * sediment properties * * * * * * * * * * * * //
+phasesol
+{
+    rho             rho [ 1 -3 0 0 0 ] 2650;
+    nu              nu [ 0 2 -1 0 0 ] 1e-6;
+    d               d [ 0 1 0 0 0 0 0 ] 2.4e-4;
+    hExp            hExp [ 0 0  0 0 0 0 0 ] 2.65;  // hindrance exponent for drag: beta^(-hExp) (2.65 by default)
+}
+// * * * * * * * * * * * * water properties * * * * * * * * * * * * //
+phasewat
+{
+    rho             rho [ 1 -3 0 0 0 ] 1000;
+    nu              nu [ 0 2 -1 0 0 ] 1e-05;
+    d               d [ 0 1 0 0 0 0 0 ] 290e-6;
+}
+// * * * * * * * * * * * * gas properties * * * * * * * * * * * * //
+phasegas
+{
+    rho             rho [ 1 -3 0 0 0 ] 1.0;
+    nu              nu [ 0 2 -1 0 0 ] 1.48e-05;
+    d               d [ 0 1 0 0 0 0 0 ] 290e-6;
+}
+
+phases (water air);
+
+water
+{
+    transportModel  Newtonian;
+    nu              nu [ 0 2 -1 0 0 0 0 ] 1e-06;
+    rho             rho [ 1 -3 0 0 0 0 0 ] 1000;
+    CrossPowerLawCoeffs
+    {
+        nu0             nu0 [ 0 2 -1 0 0 0 0 ] 1e-06;
+        nuInf           nuInf [ 0 2 -1 0 0 0 0 ] 1e-06;
+        m               m [ 0 0 1 0 0 0 0 ] 1;
+        n               n [ 0 0 0 0 0 0 0 ] 0;
+    }
+
+    BirdCarreauCoeffs
+    {
+        nu0             nu0 [ 0 2 -1 0 0 0 0 ] 0.0142515;
+        nuInf           nuInf [ 0 2 -1 0 0 0 0 ] 1e-06;
+        k               k [ 0 0 1 0 0 0 0 ] 99.6;
+        n               n [ 0 0 0 0 0 0 0 ] 0.1003;
+    }
+}
+
+air
+{
+    transportModel  Newtonian;
+    nu              nu [ 0 2 -1 0 0 0 0 ] 1.48e-05;
+    rho             rho [ 1 -3 0 0 0 0 0 ] 1;
+    CrossPowerLawCoeffs
+    {
+        nu0             nu0 [ 0 2 -1 0 0 0 0 ] 1e-06;
+        nuInf           nuInf [ 0 2 -1 0 0 0 0 ] 1e-06;
+        m               m [ 0 0 1 0 0 0 0 ] 1;
+        n               n [ 0 0 0 0 0 0 0 ] 0;
+    }
+
+    BirdCarreauCoeffs
+    {
+        nu0             nu0 [ 0 2 -1 0 0 0 0 ] 0.0142515;
+        nuInf           nuInf [ 0 2 -1 0 0 0 0 ] 1e-06;
+        k               k [ 0 0 1 0 0 0 0 ] 99.6;
+        n               n [ 0 0 0 0 0 0 0 ] 0.1003;
+    }
+}
+
+//*********************************************************************** //
+transportModel  Newtonian;
+
+sigmagf         sigmagf [1 0 -2 0 0 0 0] 0.07;
+
+nu              nu [ 0 2 -1 0 0 0 0 ] 1e-06;
+
+nuMax           nuMax [0 2 -1 0 0 0 0] 1000;      // viscosity limiter for the Frictional model (required for stability)
+
+alphasSmall      alphasSmall [ 0 0 0 0 0 0 0 ] 1e-3;  // minimum volume fraction (phase a) for division by alpha 
+
+waves2Foam true;
+// ************************************************************************* //

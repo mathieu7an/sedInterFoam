@@ -1,0 +1,110 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.5                                   |
+|   \\  /    A nd           | Web:      http://www.OpenFOAM.org               |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      environmentalProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+timeShift       0.0;
+
+seaLevel	0.00;
+
+// A list of the relaxation zones in the simulation. The parameters are given
+// in <name>Coeffs below.
+
+relaxationNames (inlet outlet);
+
+initializationName init;
+
+pName p_rgh;
+
+inletCoeffs
+{
+    	waveType	streamFunction;
+    N		10;
+    depth	3.500000;
+    omega	0.966644;
+    phi		0.000000;
+    waveNumber	 (0.165825 0.0 0.0);
+    uBar	5.95359;
+    A		nonuniform List<scalar>	10
+    (
+        0.628704
+        0.286379
+        0.117349
+        0.0493471
+        0.022013
+        0.0104115
+        0.00520352
+        0.00279447
+        0.00173037
+        0.000714019
+    );
+    B		nonuniform List<scalar>	10
+    (
+        1.05655
+        0.481977
+        0.164958
+        0.042818
+        0.00736921
+        0.000190237
+        -0.000379387
+        -0.000125823
+        1.5857e-06
+        1.36088e-05
+    );
+	
+    // Specifications on the relaxation zone shape and relaxation scheme
+    relaxationZone
+    {
+        relaxationScheme Spatial;
+        relaxationShape  Rectangular;
+        beachType        Empty;
+        relaxType   INLET;
+        startX      (-75.78 -1 0);
+        endX        (-37.89 1 0);
+        orientation      (1.0 0.0 0.0);
+        relaxationWeight Exponential;
+        exponent				 14;
+    }
+}
+
+outletCoeffs
+{
+				waveType	potentialCurrent;
+    		U					(0 0 0);
+    		Tsoft			6.500000;
+    		
+    		relaxationZone
+    {
+        relaxationScheme Spatial;
+        relaxationShape  Rectangular;
+        beachType        Empty;
+        relaxType   OUTLET;
+        startX      (37.89 -1 0);
+        endX        (75.78 1 0);
+        orientation      (1.0 0.0 0.0);
+        relaxationWeight Exponential;
+        exponent				 14;
+    }
+}
+
+initCoeffs
+{
+    waveType    potentialCurrent;
+    U           (0 0 0);
+    Tsoft        0;
+}
+
+
+
+// ************************************************************************* //

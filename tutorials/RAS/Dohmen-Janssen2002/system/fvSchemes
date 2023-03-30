@@ -1,0 +1,100 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.7.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSchemes;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+ddtSchemes
+{
+    default         backward;
+}
+
+gradSchemes
+{
+    default         Gauss linear;
+    //grad(epsilon.flu)  cellLimited Gauss linear 1;
+    //grad(kf.flu)        cellLimited Gauss linear 1;
+    //grad(omega.flu)    cellLimited Gauss linear 1;
+
+}
+
+divSchemes
+{
+    default         none;
+// alphaEqn
+    div(phi,alphas)  Gauss upwind; // limitedLinear01 1;
+    div(phir,alphas) Gauss upwind; //limitedLinear01 1;
+    div(phir,gamma) Gauss linear; //linear;
+    div(phi,gamma) Gauss vanLeer; //vanLeer;
+// UEqn
+    div(phi.sol,U.sol) Gauss limitedLinearV 1;
+    div(phi.flu,U.flu) Gauss limitedLinearV 1;
+    div(rhoPhi,U.flu) Gauss limitedLinearV 1;
+    div((rho*phi.sol),U.sol) Gauss limitedLinearV 1;
+    div(rhoPhi,U.flu) Gauss limitedLinearV 1;
+    div((rho*Rcs)) Gauss linear;
+    div((rhof*Rcf)) Gauss linear;
+    div(phiRs,Us) Gauss limitedLinear 1;
+    div(phiRf,Uf) Gauss limitedLinear 1;
+// pEqn
+    div(alphas,nu)   Gauss linear;
+// alphaPlastic
+    div(phis,alphasPlastic)   Gauss limitedLinear01 1;
+// pa
+    div(phis,ps_new_value)   Gauss limitedLinear 1;
+    div(phi,Theta) Gauss limitedLinear 1;
+// Turbulence
+    div(phi.flu,k.flu) Gauss limitedLinear 1; //upwind grad(k.flu);
+    div(phi.flu,epsilon.flu) Gauss limitedLinear 1; //Gauss upwind grad(epsilon.flu);
+    div(phi.flu,omega.flu) Gauss limitedLinear 1; //Gauss upwind grad(omega.flu);
+}
+
+laplacianSchemes
+{
+    default         Gauss linear corrected;
+// UEqn
+    laplacian(nuEffs,U.sol) Gauss linear corrected;
+    laplacian(nuEfff,U.flu) Gauss linear corrected;
+    laplacian(nuFrs,U.sol)  Gauss linear corrected;
+// pEqn
+    laplacian((rho*(1|A(U))),p_rbgh) Gauss linear corrected;
+// k and EpsilonEqn
+    laplacian(DkEff,k.f) Gauss linear corrected;
+    laplacian(DkEff,alphaw) Gauss linear corrected;
+    laplacian(DomegaEff,omegaf) Gauss linear corrected;
+    laplacian(DepsilonEff,epsilonf) Gauss linear corrected;
+    laplacian(DepsilonEff,alphaw) Gauss linear corrected;
+
+}
+
+interpolationSchemes
+{
+    default  linear;
+}
+
+snGradSchemes
+{
+    default         corrected;
+}
+
+fluxRequired
+{
+    default         no;
+    alpha.sol;
+    gamma;
+    p_rgh               ;
+}
+
+
+// ************************************************************************* //

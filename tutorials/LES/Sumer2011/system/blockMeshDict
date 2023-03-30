@@ -1,0 +1,121 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.1.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 1.0;
+
+vertices
+(
+    (-6 0    0   )    // 0 
+    ( 6 0    0   )    // 1
+    (15 0    0   )    // 2
+    (15 0.80 0   )    // 3
+    ( 6 0.80 0   )    // 4
+    (-6 0.80 0   )    // 5
+
+    (-6 0    0.60)    // 6
+    ( 6 0    0.60)    // 7
+    (15 0    0.60)    // 8
+    (15 0.80 0.60)    // 9
+    ( 6 0.80 0.60)    // 10
+    (-6 0.80 0.60)    // 11
+
+
+);
+
+blocks
+(
+    hex (0 1 4 5 6 7 10 11) (667 44 33) simpleGrading (1 1 1)
+    hex (1 2 3 4 7 8  9 10) (500 44 33) simpleGrading (1 1 1)
+//    hex (0 1 4 5 6 7 10 11) (80 5 4) simpleGrading (1 1 1)
+//    hex (1 2 3 4 7 8  9 10) (60 5 4) simpleGrading (1 1 1)
+
+);
+
+edges
+(
+);
+
+boundary
+(
+    leftWall
+    {
+        type patch;
+        faces
+        (
+            (0 6 11 5)
+        );
+    }
+    rightWall
+    {
+        type wall;
+        faces
+        (
+            (2 3 9 8)
+        );
+    }
+    lowerWallSmooth
+    {
+        type wall;
+        faces
+        (
+            (0 1 7 6)
+            (1 2 8 7)
+        );
+    }
+//    lowerWallRough
+//    {
+//        type wall;
+//        faces
+//        (
+//            (1 2 8 7)
+//        );
+//    }
+    cfrontWall
+    {
+        type wall;
+        faces
+        (
+            (0 5 4 1)
+            (1 4 3 2)
+        );
+//        neighbourPatch  cbackWall;
+    }
+    cbackWall
+    {
+        type wall;
+        faces
+        (
+            (6 7 10 11)
+            (7 8 9 10)
+        );
+//        neighbourPatch  cfrontWall;
+    }
+    atmosphere
+    {
+        type patch;
+        faces
+        (
+            (5 11 10 4)
+            (4 10 9 3)
+        );
+    }
+);
+
+mergePatchPairs
+(
+);
+
+// ************************************************************************* //

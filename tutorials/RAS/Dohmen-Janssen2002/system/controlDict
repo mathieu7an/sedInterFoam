@@ -1,0 +1,73 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.7.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     sedFoam;
+
+startFrom       latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+//endTime         13;
+endTime         70;
+
+deltaT          1e-5;
+
+writeControl    adjustableRunTime;
+
+writeInterval   0.1;
+
+purgeWrite      0;
+
+writeFormat     binary;
+
+writePrecision  6;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable on;
+
+adjustTimeStep  on;
+
+maxCo           0.4;
+
+maxAlphaCo      0.4;
+
+maxDeltaT       1e-2;
+
+OptimisationSwitches
+  {
+      //- Parallel IO file handler
+      // uncollated (default), collated or masterUncollated
+      fileHandler collated;
+
+      //- collated: thread buffer size for queued file writes.
+      // If set to 0 or not sufficient for the file size threading is not used.
+      // Default: 2e9
+      maxThreadFileBufferSize 0;
+
+      //- masterUncollated: non-blocking buffer size.
+      // If the file exceeds this buffer size scheduled transfer is used.
+      // Default: 2e9
+      maxMasterFileBufferSize 2e9;
+  }
+
+libs ( "libOpenFOAM.so" "libgroovyBC.so" ) ;
+// ************************************************************************* //
