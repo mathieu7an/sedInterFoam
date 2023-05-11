@@ -14,7 +14,7 @@ FoamFile
     object      transportProperties;
 }
 // * * * * * * * * * * * * sediment properties * * * * * * * * * * * * //
-phasesol
+phasesolid
 {
     rho             rho [ 1 -3 0 0 0 ] 2650;
     nu              nu [ 0 2 -1 0 0 ] 1e-6;
@@ -22,7 +22,7 @@ phasesol
     hExp            hExp [ 0 0  0 0 0 0 0 ] 2.65;  // hindrance exponent for drag: beta^(-hExp) (2.65 by default)
 }
 // * * * * * * * * * * * * water properties * * * * * * * * * * * * //
-phasewat
+phasewater
 {
     rho             rho [ 1 -3 0 0 0 ] 1000;
     nu              nu [ 0 2 -1 0 0 ] 1e-05;

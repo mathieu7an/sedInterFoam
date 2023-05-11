@@ -1,4 +1,4 @@
-/*---------------------------------------------------------------------------*\
+	/*---------------------------------------------------------------------------*\
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
@@ -179,14 +179,14 @@ autoPtr<phaseModel> phases = phaseModel::New
 (
     mesh,
     transportProperties,
-    "sol"
+    "solid"
 );
 
 autoPtr<phaseModel> phasew = phaseModel::New
 (
     mesh,
     transportProperties,
-    "wat"
+    "water"
 );
 
 autoPtr<phaseModel> phaseg = phaseModel::New
@@ -218,7 +218,7 @@ volScalarField alphaf
 (
     IOobject
     (
-         IOobject::groupName("alpha", "flu"),
+         IOobject::groupName("alpha", "fluid"),
          runTime.timeName(),
          mesh,
          IOobject::NO_READ,
@@ -263,7 +263,7 @@ volVectorField Uf
 (
     IOobject
     (
-        IOobject::groupName("U", "flu"),
+        IOobject::groupName("U", "fluid"),
         runTime.timeName(),
         mesh,
         IOobject::NO_READ,
@@ -278,7 +278,7 @@ surfaceScalarField phif
 (
     IOobject
     (
-        IOobject::groupName("phi", "flu"),
+        IOobject::groupName("phi", "fluid"),
         runTime.timeName(),
         mesh
     ),
@@ -1031,7 +1031,7 @@ if (interfacialProperties.found("dragPhase"))
     dragPhase = interfacialProperties.get<word>("dragPhase");
 
     bool validDrag =
-        dragPhase == "sol" || dragPhase == "flu" || dragPhase == "blended";
+        dragPhase == "solid" || dragPhase == "fluid" || dragPhase == "blended";
 
     if (validDrag == false)
     {

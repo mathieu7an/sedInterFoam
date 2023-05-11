@@ -34,10 +34,10 @@ divSchemes
     div(phir,gamma) Gauss linear;
     div(phi,gamma) Gauss vanLeer;
 // UEqn
-    div(phi.sol,U.sol) Gauss limitedLinearV 1;
-    div(phi.flu,U.flu) Gauss limitedLinearV 1;
-    div(rhoPhi,U.flu) Gauss limitedLinearV 1;
-    div((rho*phi.sol),U.sol) Gauss limitedLinearV 1;
+    div(phi.solid,U.solid) Gauss limitedLinearV 1;
+    div(phi.fluid,U.fluid) Gauss limitedLinearV 1;
+    div(rhoPhi,U.fluid) Gauss limitedLinearV 1;
+    div((rho*phi.solid),U.solid) Gauss limitedLinearV 1;
     div((rho*phif),Uf) Gauss limitedLinearV 1;
     div((rho*Rcs)) Gauss linear;
     div((rhof*Rcf)) Gauss linear;
@@ -69,7 +69,7 @@ snGradSchemes
 fluxRequired
 {
     default         no;
-    alpha.sol;
+    alpha.solid;
     gamma;
     p_rgh;
 }

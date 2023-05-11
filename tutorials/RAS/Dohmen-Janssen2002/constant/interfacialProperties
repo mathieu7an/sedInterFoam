@@ -15,11 +15,11 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dragModelsol      GidaspowErgunWenYu;
+dragModelsolid      GidaspowErgunWenYu;
 
-dragModelwat      GidaspowErgunWenYu;
+dragModelwater      GidaspowErgunWenYu;
 
-dragPhase       sol;
+dragPhase       solid;
 
 
 // ************************************************************************* //

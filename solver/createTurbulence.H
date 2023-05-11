@@ -25,7 +25,7 @@ volScalarField alphasEff
 (
     IOobject
     (
-        IOobject::groupName("alphasEff", "sol"),
+        IOobject::groupName("alphasEff", "solid"),
         runTime.timeName(),
         mesh,
         IOobject::NO_READ,
@@ -42,7 +42,7 @@ surfaceScalarField alphasPhis
     IOobject::groupName
     (
         "alphasPhis",
-        "sol"
+        "solid"
     ),
     alphascf*phis
 );
@@ -68,7 +68,7 @@ surfaceScalarField alphafPhif
     IOobject::groupName
     (
         "alphafPhi",
-        "flu"
+        "fluid"
     ),
     alphafcf*phif
 );
@@ -90,7 +90,7 @@ IOdictionary turbulencePropertiess
 (
     IOobject
     (
-        "turbulenceProperties.sol",
+        "turbulenceProperties.solid",
         runTime.constant(),
         mesh,
         IOobject::MUST_READ,
@@ -102,7 +102,7 @@ IOdictionary turbulencePropertiesf
 (
     IOobject
     (
-        "turbulenceProperties.flu",
+        "turbulenceProperties.fluid",
         runTime.constant(),
         mesh,
         IOobject::MUST_READ,

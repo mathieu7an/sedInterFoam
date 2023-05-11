@@ -34,10 +34,10 @@ divSchemes
     div(phir,gamma) Gauss linear;
     div(phi,gamma) Gauss vanLeer;
 // UEqn
-    div((rho*phi.sol),U.sol)    Gauss limitedLinearV 1;
-    div(phi.sol,U.sol) Gauss limitedLinearV 1;
-    div(rhoPhi,U.flu)    Gauss limitedLinearV 1;
-    div(phi.flu,U.flu) Gauss limitedLinearV 1;
+    div((rho*phi.solid),U.solid)    Gauss limitedLinearV 1;
+    div(phi.solid,U.solid) Gauss limitedLinearV 1;
+    div(rhoPhi,U.fluid)    Gauss limitedLinearV 1;
+    div(phi.flu,U.fluid) Gauss limitedLinearV 1;
     div(phiRs,Us)   Gauss limitedLinear 1;
     div(phiRf,Uf)   Gauss limitedLinear 1;
     div((rho*Rcs)) Gauss linear;
@@ -45,10 +45,10 @@ divSchemes
 // pEqn
     div(alphas,nu)   Gauss linear;
 // turbulence
-    div(alphafPhi.flu,flmb.flu) Gauss limitedLinear 1;
-    div(alphafPhi.flu,fmmb.flu) Gauss limitedLinear 1;
-    div(alphasPhis.sol,flma.sol) Gauss limitedLinear 1;
-    div(alphasPhis.sol,fmma.sol) Gauss limitedLinear 1;
+    div(alphafPhi.fluid,flmb.fluid) Gauss limitedLinear 1;
+    div(alphafPhi.fluid,fmmb.fluid) Gauss limitedLinear 1;
+    div(alphasPhis.solid,flma.solid) Gauss limitedLinear 1;
+    div(alphasPhis.solid,fmma.solid) Gauss limitedLinear 1;
 // ThetaEqn
     div(phi,Theta)  Gauss limitedLinear 1;
 // alphaPlastic

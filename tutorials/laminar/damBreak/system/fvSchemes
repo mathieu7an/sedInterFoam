@@ -33,16 +33,16 @@ divSchemes
     div(phir,gamma) Gauss linear;
     div(phi,alphas) Gauss vanLeer;
     div(phir,alphas) Gauss linear;
-    div(U.flu) Gauss linear;
+    div(U.fluid) Gauss linear;
 // UEqn
-    div(phi.sol,U.sol) Gauss linearUpwind grad(U);
-    div(phi.flu,U.flu) Gauss linearUpwind grad(U);
+    div(phi.solid,U.solid) Gauss linearUpwind grad(U);
+    div(phi.fluid,U.fluid) Gauss linearUpwind grad(U);
     div(rhoPhi,U) Gauss linearUpwind grad(U);
-    div(rhoPhi,U.flu) Gauss linearUpwind grad(U);
+    div(rhoPhi,U.fluid) Gauss linearUpwind grad(U);
     div((rho*phif),Uf) Gauss linearUpwind grad(U);
     div((rho*Rcs)) Gauss linear;
     div(phiRs,Us) Gauss linear;
-    div((rho*phi.sol),U.sol) Gauss linearUpwind grad(U);
+    div((rho*phi.solid),U.solid) Gauss linearUpwind grad(U);
     div((rhof*Rcf)) Gauss linear;
     div(phiRf,Uf) Gauss linear;
     div((muf*dev2(T(grad(U))))) Gauss linear;
@@ -70,7 +70,7 @@ fluxRequired
 {
     default         no;
     alpha.wat;
-    alpha.sol;
+    alpha.solid;
     gamma;
     p_rgh;
 }

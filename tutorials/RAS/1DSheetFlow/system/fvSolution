@@ -39,7 +39,7 @@ solvers
         relTol          0;
     }
 
-    "(k.flu|epsilon.flu|omega.flu|ps_new_value|alphasPlastic)"
+    "(k.fluid|epsilon.fluid|omega.fluid|ps_new_value|alphasPlastic)"
     {
         solver          PBiCG;
         preconditioner  DILU;
@@ -47,21 +47,21 @@ solvers
         relTol          0.001;
     }
 
-    "(k.fluFinal|epsilon.fluFinal|omega.fluFinal|psFinal|alphasPlasticFinal)"
+    "(k.fluidFinal|epsilon.fluidFinal|omega.fluidFinal|psFinal|alphasPlasticFinal)"
     {
         solver          PBiCG;
         preconditioner  DILU;
         tolerance       1e-6;
         relTol          0;
     }
-    alpha.sol
+    alpha.solid
     {
         solver          PBiCG;
         preconditioner  DILU;
         tolerance       1e-15;
         relTol          0;
     }
-    alpha.solFinal
+    alpha.solidFinal
     {
         solver          PBiCG;
         preconditioner  DILU;
@@ -126,7 +126,7 @@ relaxationFactors
     }
     equations
     {
-        U.sol            0.7;
+        U.solid            0.7;
         Uf            0.7;
         k             0.9;
         omega         0.9;

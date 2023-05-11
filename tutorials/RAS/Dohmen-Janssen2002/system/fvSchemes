@@ -23,9 +23,9 @@ ddtSchemes
 gradSchemes
 {
     default         Gauss linear;
-    //grad(epsilon.flu)  cellLimited Gauss linear 1;
-    //grad(kf.flu)        cellLimited Gauss linear 1;
-    //grad(omega.flu)    cellLimited Gauss linear 1;
+    //grad(epsilon.fluid)  cellLimited Gauss linear 1;
+    //grad(kf.fluid)        cellLimited Gauss linear 1;
+    //grad(omega.fluid)    cellLimited Gauss linear 1;
 
 }
 
@@ -38,11 +38,11 @@ divSchemes
     div(phir,gamma) Gauss linear; //linear;
     div(phi,gamma) Gauss vanLeer; //vanLeer;
 // UEqn
-    div(phi.sol,U.sol) Gauss limitedLinearV 1;
-    div(phi.flu,U.flu) Gauss limitedLinearV 1;
-    div(rhoPhi,U.flu) Gauss limitedLinearV 1;
-    div((rho*phi.sol),U.sol) Gauss limitedLinearV 1;
-    div(rhoPhi,U.flu) Gauss limitedLinearV 1;
+    div(phi.solid,U.solid) Gauss limitedLinearV 1;
+    div(phi.fluid,U.fluid) Gauss limitedLinearV 1;
+    div(rhoPhi,U.fluid) Gauss limitedLinearV 1;
+    div((rho*phi.solid),U.solid) Gauss limitedLinearV 1;
+    div(rhoPhi,U.fluid) Gauss limitedLinearV 1;
     div((rho*Rcs)) Gauss linear;
     div((rhof*Rcf)) Gauss linear;
     div(phiRs,Us) Gauss limitedLinear 1;
@@ -55,18 +55,18 @@ divSchemes
     div(phis,ps_new_value)   Gauss limitedLinear 1;
     div(phi,Theta) Gauss limitedLinear 1;
 // Turbulence
-    div(phi.flu,k.flu) Gauss limitedLinear 1; //upwind grad(k.flu);
-    div(phi.flu,epsilon.flu) Gauss limitedLinear 1; //Gauss upwind grad(epsilon.flu);
-    div(phi.flu,omega.flu) Gauss limitedLinear 1; //Gauss upwind grad(omega.flu);
+    div(phi.fluid,k.fluid) Gauss limitedLinear 1; //upwind grad(k.flu);
+    div(phi.fluid,epsilon.fluid) Gauss limitedLinear 1; //Gauss upwind grad(epsilon.flu);
+    div(phi.fluid,omega.fluid) Gauss limitedLinear 1; //Gauss upwind grad(omega.flu);
 }
 
 laplacianSchemes
 {
     default         Gauss linear corrected;
 // UEqn
-    laplacian(nuEffs,U.sol) Gauss linear corrected;
-    laplacian(nuEfff,U.flu) Gauss linear corrected;
-    laplacian(nuFrs,U.sol)  Gauss linear corrected;
+    laplacian(nuEffs,U.solid) Gauss linear corrected;
+    laplacian(nuEfff,U.fluid) Gauss linear corrected;
+    laplacian(nuFrs,U.solid)  Gauss linear corrected;
 // pEqn
     laplacian((rho*(1|A(U))),p_rbgh) Gauss linear corrected;
 // k and EpsilonEqn
@@ -91,7 +91,7 @@ snGradSchemes
 fluxRequired
 {
     default         no;
-    alpha.sol;
+    alpha.solid;
     gamma;
     p_rgh               ;
 }

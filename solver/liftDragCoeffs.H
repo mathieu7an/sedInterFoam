@@ -27,7 +27,7 @@ volScalarField Ks(drags->K(magUr));
 
 K = Ks;
 
-if (dragPhase == "flu")
+if (dragPhase == "fluid")
 {
     volScalarField Kf(dragf->K(magUr));
     K = Kf;

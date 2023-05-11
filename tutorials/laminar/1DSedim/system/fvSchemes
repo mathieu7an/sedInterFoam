@@ -33,13 +33,13 @@ divSchemes
     div(phir,alphas) Gauss upwind;//limitedLinear01 1;
     div(phir,gamma) Gauss linear;
     div(phi,gamma) Gauss vanLeer;
-    div(U.flu) Gauss linear;
+    div(U.fluid) Gauss linear;
 // UEqn
-    div(phi.sol,U.sol) Gauss limitedLinearV 1;
-    div(phi.flu,U.flu) Gauss limitedLinearV 1;
-    div(rhoPhi,U.flu) Gauss limitedLinearV 1;
+    div(phi.solid,U.solid) Gauss limitedLinearV 1;
+    div(phi.fluid,U.fluid) Gauss limitedLinearV 1;
+    div(rhoPhi,U.fluid) Gauss limitedLinearV 1;
     div((interpolate(rhof)*phif),Uf) Gauss limitedLinearV 1;
-    div((rho*phi.sol),U.sol) Gauss limitedLinearV 1;
+    div((rho*phi.solid),U.solid) Gauss limitedLinearV 1;
     div((rho*phif),Uf) Gauss limitedLinearV 1;
     div((rho*Rcs)) Gauss linear;
     div((rhof*Rcf)) Gauss linear;
@@ -57,9 +57,9 @@ laplacianSchemes
 {
     default         Gauss linear corrected;
 // UEqn
-    laplacian(nuEffs,U.sol) Gauss linear corrected;
+    laplacian(nuEffs,U.solid) Gauss linear corrected;
     laplacian(nuEfff,Uf) Gauss linear corrected;
-    laplacian(nuFrs,U.sol)  Gauss linear corrected;
+    laplacian(nuFrs,U.solid)  Gauss linear corrected;
 // pEqn
     laplacian((rho*(1|A(U))),p_rbgh) Gauss linear corrected;
 }
@@ -77,8 +77,8 @@ snGradSchemes
 fluxRequired
 {
     default         no;
-    alpha.sol;
-    alpha.wat;
+    alpha.solid;
+    alpha.water;
     p_rgh;
     gamma;
 }

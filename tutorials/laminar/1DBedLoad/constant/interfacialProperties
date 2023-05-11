@@ -15,11 +15,11 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dragModelsol      GidaspowSchillerNaumann;
+dragModelsolid      GidaspowSchillerNaumann;
 
-dragModelwat      GidaspowSchillerNaumann;
+dragModelwater      GidaspowSchillerNaumann;
 
-dragPhase       sol;
+dragPhase       solid;
 
 
 // ************************************************************************* //

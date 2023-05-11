@@ -72,9 +72,9 @@
             // Cache the upwind-flux
             tgammaPhiCorr0 = tgammaPhiUD;
 
-            alphaf = min(max(1.0-alphas, scalar(0)), scalar(1.0));
+            /*alphaf = min(max(1.0-alphas, scalar(0)), scalar(1.0));
 			alphaw = alphaf*gamma;
-			alphag = min(max(alphaf*(1.0-gamma), scalar(0)), scalar(1.0));
+			alphag = min(max(alphaf*(1.0-gamma), scalar(0)), scalar(1.0));*/
 
             //Replace air in water-sand interface by water
             //if(addWater)
@@ -147,20 +147,20 @@
             //gamma.min(1.0);
             //gamma.max(0);
             
-            alphaf = 1.0-alphas;
+            /*alphaf = 1.0-alphas;
 			alphaw = alphaf*gamma;
-			alphag = alphaf*(1.0-gamma);
+			alphag = alphaf*(1.0-gamma);*/
         }
         if (gammaApplyPrevCorr && MULESCorr)
         {
             tgammaPhiCorr0 = gammaPhi - tgammaPhiCorr0;
         }
-
+        /*
         Info<< "Carrier phase volume fraction = "
             << alphaw.weightedAverage(mesh.Vsc()).value()
             << "  Min(" << alphaw.name() << ") = " << min(alphaw).value()
             << "  Max(" << alphaw.name() << ") = " << max(alphaw).value()
-            << endl;
+            << endl;*/
     }
     //For problems without free surface: 
 	else
@@ -177,7 +177,7 @@
         + phif*rhog;
         //+ fvc::flux(-phir, gamma*alphas, gammarScheme)*(rhow-rhog);
 
-    muf = (alphaw*rhow*nuw + alphag*rhog*nug)/alphaf;
+    /*muf = (alphaw*rhow*nuw + alphag*rhog*nug)/alphaf;
     nuf = (alphaw*nuw + alphag*nug)/alphaf;
-    rhof = (alphaw*rhow + alphag*rhog)/alphaf;
+    rhof = (alphaw*rhow + alphag*rhog)/alphaf;*/
 }

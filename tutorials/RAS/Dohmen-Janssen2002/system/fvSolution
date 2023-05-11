@@ -87,7 +87,7 @@ solvers
         maxIter	100;
     }
 
-    "(k.flu|epsilon.flu)"
+    "(k.fluid|epsilon.fluid)"
     {
 	solver          smoothSolver;
         smoother        symGaussSeidel;
@@ -96,7 +96,7 @@ solvers
         minIter         2;
     }
 
-    "(k.fluFinal|epsilon.fluFinal)"
+    "(k.fluidFinal|epsilon.fluidFinal)"
     {
        solver          smoothSolver;
         smoother        symGaussSeidel;

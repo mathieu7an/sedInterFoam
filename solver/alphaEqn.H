@@ -32,10 +32,10 @@
         alphas.min(alphasMax);
         alphas.max(0);
 
-		alphaf = min(max(1.0-alphas, scalar(0)), scalar(1.0));
+	alphaf = min(max(1.0-alphas, scalar(0)), scalar(1.0));
         alphaw = alphaf*gamma;
         voidFrac = 1.0 - gamma;
-		alphag = min(max(1.0 - alphaw - alphas, scalar(0)), scalar(1.0));
+	alphag = min(max(1.0 - alphaw - alphas, scalar(0)), scalar(1.0));
 
         //alphaw += alphag*(pos(alphas-alphag)*pos(alphaw-0.1)*pos(0.99-alphaw));
         //alphag *= (1-pos(alphas-alphag)*pos(alphaw-0.1)*pos(0.99-alphaw));
@@ -46,6 +46,11 @@
             << alphas.weightedAverage(mesh.V()).value()
             << "  Min(alphas) = " << gMin(alphas)
             << "  Max(alphas) = " << gMax(alphas)
+            << endl;
+            Info<< "Carrier phase volume fraction = "
+            << alphaw.weightedAverage(mesh.Vsc()).value()
+            << "  Min(" << alphaw.name() << ") = " << min(alphaw).value()
+            << "  Max(" << alphaw.name() << ") = " << max(alphaw).value()
             << endl;
         }
         // Construct the comp   lete mass flux
