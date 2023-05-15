@@ -109,9 +109,9 @@ eps_file = sol + case + '.eps'
 #########################################
 
 X, Y, Z = fluidfoam.readmesh(sol)
-alpha = fluidfoam.readscalar(sol, tread, 'alpha.sol')
-Us = fluidfoam.readvector(sol, tread, 'U.sol')
-Uw = fluidfoam.readvector(sol, tread, 'Uf')
+alpha = fluidfoam.readscalar(sol, tread, 'alpha.solid')
+Us = fluidfoam.readvector(sol, tread, 'U.solid')
+Uw = fluidfoam.readvector(sol, tread, 'U.fluid')
 pff = fluidfoam.readscalar(sol, tread, 'pff')
 tau = fluidfoam.readtensor(sol, tread, 'Taus')[3]
 #p = fluidfoam.readscalar(sol, tread, 'p')

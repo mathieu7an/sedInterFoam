@@ -120,9 +120,9 @@ eps_file = sol + case + '.eps'
 # Reading SedFoam results
 #
 X, Y, Z = fluidfoam.readmesh(sol)
-alpha = fluidfoam.readscalar(sol, tread, 'alpha.sol')
-Us = fluidfoam.readvector(sol, tread, 'U.sol')
-Uw = fluidfoam.readvector(sol, tread, 'U.wat')
+alpha = fluidfoam.readscalar(sol, tread, 'alpha.solid')
+Us = fluidfoam.readvector(sol, tread, 'U.solid')
+Uw = fluidfoam.readvector(sol, tread, 'U.water')
 pff = fluidfoam.readscalar(sol, tread, 'pff')
 
 Ny = np.size(Y)

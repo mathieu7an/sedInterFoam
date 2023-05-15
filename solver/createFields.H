@@ -224,11 +224,11 @@ volScalarField alphaf
          IOobject::NO_READ,
          IOobject::AUTO_WRITE
     ),
-    mesh,
-    dimensionedScalar("zero", dimensionSet(0, 0, 0, 0, 0), 0.0)
+    1.0-alphas
+//    dimensionedScalar("zero", dimensionSet(0, 0, 0, 0, 0), 0.0)
 );
 
-alphaf = 1.0 - alphas;
+//alphaf = 1.0 - alphas;
 
 volScalarField gamma
 (
@@ -266,13 +266,13 @@ volVectorField Uf
         IOobject::groupName("U", "fluid"),
         runTime.timeName(),
         mesh,
-        IOobject::NO_READ,
+        IOobject::MUST_READ,
         IOobject::AUTO_WRITE
     ),
-    Uw
+    mesh
 );
 
-Uf = (alphag*Ug + alphaw*Uw)/alphaf;
+//Uf = (alphag*Ug + alphaw*Uw)/alphaf;
 
 surfaceScalarField phif
 (
@@ -280,7 +280,9 @@ surfaceScalarField phif
     (
         IOobject::groupName("phi", "fluid"),
         runTime.timeName(),
-        mesh
+        mesh,
+        IOobject::READ_IF_PRESENT,
+        IOobject::AUTO_WRITE
     ),
     fvc::flux(Uf)
 );
@@ -306,7 +308,8 @@ volScalarField rho
         "rho",
         runTime.timeName(),
         mesh,
-        IOobject::READ_IF_PRESENT
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
     ),
     alphaw*rhow + alphag*rhog + alphas*rhos
 );
@@ -661,20 +664,7 @@ volVectorField U
         IOobject::NO_READ,
         IOobject::AUTO_WRITE
     ),
-    alphas*Us + alphaf*Uf + alphag*Ug
-);
-
-volVectorField Urela
-(
-    IOobject
-    (
-        "Urela",
-        runTime.timeName(),
-        mesh,
-        IOobject::NO_READ,
-        IOobject::AUTO_WRITE
-    ),
-    U - Uf
+    alphas*Us + alphaf*Uf
 );
 
 Info<< "Calculating face flux field phi\n" << endl;
@@ -685,8 +675,8 @@ surfaceScalarField phi
         "phi",
         runTime.timeName(),
         mesh,
-        IOobject::NO_READ,
-        IOobject::NO_WRITE
+        IOobject::READ_IF_PRESENT,
+        IOobject::AUTO_WRITE
     ),
     fvc::flux(U)
 );
@@ -717,7 +707,7 @@ volVectorField Usclip
         runTime.timeName(),
         mesh,
         IOobject::NO_READ,
-        IOobject::AUTO_WRITE
+        IOobject::NO_WRITE
     ),
     Us
 );
@@ -763,7 +753,7 @@ surfaceScalarField gammaPhi
         "gammaPhi",
         runTime.timeName(),
         mesh,
-        IOobject::READ_IF_PRESENT,
+        IOobject::NO_READ,
         IOobject::NO_WRITE
     ),
     phi*fvc::interpolate(gamma)
@@ -776,7 +766,7 @@ surfaceScalarField alphasPhi
         "alphasPhi",
         runTime.timeName(),
         mesh,
-        IOobject::READ_IF_PRESENT,
+        IOobject::NO_READ,
         IOobject::NO_WRITE
     ),
     phi*fvc::interpolate(alphas)
@@ -887,7 +877,7 @@ volScalarField ps
         runTime.timeName(),
         mesh,
         IOobject::READ_IF_PRESENT,
-        IOobject::NO_WRITE
+        IOobject::AUTO_WRITE
     ),
     mesh,
     dimensionedScalar("zero", dimensionSet(1, -1, -2, 0, 0), 0.0)
@@ -1169,7 +1159,7 @@ volScalarField pff
         runTime.timeName(),
         mesh,
         IOobject::NO_READ,
-        IOobject::NO_WRITE
+        IOobject::AUTO_WRITE
     ),
     mesh,
     dimensionedScalar("zero", dimensionSet(1, -1, -2, 0, 0), 0.0)
@@ -1197,7 +1187,7 @@ volScalarField p
         runTime.timeName(),
         mesh,
         IOobject::NO_READ,
-        IOobject::NO_WRITE
+        IOobject::AUTO_WRITE
     ),
     p_rgh + rhof*gh
 );

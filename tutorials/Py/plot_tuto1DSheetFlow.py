@@ -23,12 +23,12 @@ def readOpenFoam(sol):
     tread = output.decode().rstrip().split('\n')[0]
     Nt = 1
     X, Y, Z = fluidfoam.readmesh(sol)
-    alpha = fluidfoam.readscalar(sol, tread, 'alpha.sol')
-    Ua = fluidfoam.readvector(sol, tread, 'U.sol')
-    Ub = fluidfoam.readvector(sol, tread, 'U.flu')
+    alpha = fluidfoam.readscalar(sol, tread, 'alpha.solid')
+    Ua = fluidfoam.readvector(sol, tread, 'U.solid')
+    Ub = fluidfoam.readvector(sol, tread, 'U.fluid')
     #Tauf = fluidfoam.readtensor(sol, tread, 'Tauw')
     #Taus = fluidfoam.readtensor(sol, tread, 'Taus')
-    k = fluidfoam.readscalar(sol, tread, 'k.flu')
+    k = fluidfoam.readscalar(sol, tread, 'k.fluid')
     Theta = fluidfoam.readscalar(sol, tread, 'Theta')
 
     return Nt, Y, Ua[0, :], Ub[0, :], alpha, k,Theta

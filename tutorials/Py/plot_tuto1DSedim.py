@@ -77,7 +77,7 @@ for t in tread:
     print("Reading time: %s s" % t)
     k = k + 1
 
-    alphat[:, k] = fluidfoam.readscalar(sol, t + '/', 'alpha.sol')
+    alphat[:, k] = fluidfoam.readscalar(sol, t + '/', 'alpha.solid')
     time[k] = float(t)
 
 
