@@ -222,7 +222,7 @@ volScalarField alphaf
          runTime.timeName(),
          mesh,
          IOobject::NO_READ,
-         IOobject::AUTO_WRITE
+         IOobject::NO_WRITE
     ),
     1.0-alphas
 //    dimensionedScalar("zero", dimensionSet(0, 0, 0, 0, 0), 0.0)
@@ -693,8 +693,8 @@ surfaceScalarField phisclip
         "phisclip",
         runTime.timeName(),
         mesh,
-        IOobject::NO_READ,
-        IOobject::NO_WRITE
+        IOobject::READ_IF_PRESENT,
+        IOobject::AUTO_WRITE
     ),
     phis
 );
@@ -707,13 +707,13 @@ volVectorField Usclip
         runTime.timeName(),
         mesh,
         IOobject::NO_READ,
-        IOobject::NO_WRITE
+        IOobject::AUTO_WRITE
     ),
     Us
 );
 
 #include "UsUfLimiter.H"
-Us.correctBoundaryConditions();
+//Us.correctBoundaryConditions();
 
 // Mass flux
 surfaceScalarField rhoPhi
@@ -877,7 +877,7 @@ volScalarField ps
         runTime.timeName(),
         mesh,
         IOobject::READ_IF_PRESENT,
-        IOobject::AUTO_WRITE
+        IOobject::NO_WRITE
     ),
     mesh,
     dimensionedScalar("zero", dimensionSet(1, -1, -2, 0, 0), 0.0)
@@ -954,7 +954,7 @@ volScalarField alphasPlastic
          "alphasPlastic",
          runTime.timeName(),
          mesh,
-         IOobject::READ_IF_PRESENT,
+         IOobject::NO_READ,
          IOobject::NO_WRITE
      ),
      mesh,
@@ -968,7 +968,7 @@ volScalarField delta
         "delta",
         runTime.timeName(),
         mesh,
-        IOobject::READ_IF_PRESENT,
+        IOobject::NO_READ,
         IOobject::NO_WRITE
     ),
     mesh,
@@ -1092,7 +1092,7 @@ volScalarField K
         runTime.timeName(),
         mesh,
         IOobject::NO_READ,
-        IOobject::NO_WRITE
+        IOobject::AUTO_WRITE
     ),
     drags->K(mag(Uf-Us))
 );

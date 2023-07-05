@@ -294,8 +294,8 @@ License
         );
         p_rgh = p - rhof*gh;
     }
-    Usclip = Us;
-    phisclip = phis;
+    //Usclip = Us;
+    //phisclip = phis;
     // Apply velocity limiters and correct boundary conditions
     #include "UsUfLimiter.H"
     Us.correctBoundaryConditions();
