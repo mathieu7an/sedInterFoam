@@ -1,0 +1,157 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.7.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers
+{
+    p_rgh
+    {
+        solver          GAMG;
+        tolerance       1e-08;
+        relTol          0;
+        smoother        DIC;
+        nPreSweeps      0;
+        nPostSweeps     2;
+        nFinestSweeps   2;
+        cacheAgglomeration true;
+        nCellsInCoarsestLevel 10;
+        agglomerator    faceAreaPair;
+        mergeLevels     1;
+    }
+
+    p_rghFinal
+    {
+        $p_rgh;
+    }
+
+    "(ps_new_value|alphasPlastic)"
+    {
+        solver          PBiCGStab;//  PBiCGstab;
+        preconditioner  DILU;
+        tolerance       1e-6;
+        relTol          0.001;
+    }
+
+    "(psFinal|alphasPlasticFinal)"
+    {
+        solver          PBiCGStab;//PBiCGstab;
+        preconditioner  DILU;
+        tolerance       1e-8;
+        relTol          0;
+    }
+    alpha.solid
+    {
+        solver          PBiCGStab;//PBiCGstab;
+        preconditioner  DILU;
+        tolerance       1e-8;
+        relTol          0;
+    }
+    alpha.solidFinal
+    {
+        solver          PBiCGStab;//PBiCGstab;
+        preconditioner  DILU;
+        tolerance       1e-10;
+        relTol          0;
+    }
+    gamma
+    {
+        MULESCorr       yes;
+        nLimiterIter    3;
+        cAlpha         1;
+        solver          PBiCGStab;//smoothSolver;
+        smoother        DILU; // symGaussSeidel;
+        tolerance       1e-8;
+        relTol          0;
+    }
+    gammaFinal
+    {
+        solver           PBiCGStab;//smoothSolver;
+        preconditioner   DILU;
+        smoother         DILU; //  symGaussSeidel;
+        tolerance        1e-10;
+        relTol           0;
+    }
+    Theta
+    {
+        solver          PBiCGStab;//PBiCGstab;
+        preconditioner  DILU;
+        tolerance       1e-6;
+        relTol          0;
+    }
+    ThetaFinal
+    {
+        solver          PBiCGStab;// PBiCGstab;
+        preconditioner  DILU;
+        tolerance       1e-8;
+        relTol          0;
+    }
+        "(epsilon.fluid|k.fluid)"
+    {
+        solver          PBiCGStab; //smoothSolver;
+        preconditioner  DILU;
+        smoother        DILU; //DILUGaussSeidel;
+        tolerance       1e-6;
+        relTol          0;
+    }
+
+    "(epsilon.fluidFinal|k.fluidFinal)"
+    {
+        solver          PBiCGStab; //smoothSolver;
+        preconditioner  DILU;
+        smoother        DILU; //DILUGaussSeidel;
+        tolerance       1e-8;
+        relTol          0;
+    }
+
+}
+
+
+PIMPLE
+{
+    momentumPredictor 0;
+    nOuterCorrectors  1;
+    nCorrectors     3;
+    nNonOrthogonalCorrectors 0;//5;//0;
+    correctAlpha    0;
+    nAlphasCorr      1;
+    nGammaCorr     1;
+    nAlphaSubCycles 1;
+//    pRefCell        0;
+//    pRefValue       0;
+    MULESCorr       yes;
+    nLimiterIter    3;
+    cAlpha         1;
+}
+
+//*
+relaxationFactors
+{
+    fields
+    {
+        p_rgh               0.3;
+    }
+    equations
+    {
+        U.solid            0.7;
+        Uf            0.7;
+        k             0.9;
+        omega         0.9;
+    }
+}
+//*/
+
+
+// ************************************************************************* //

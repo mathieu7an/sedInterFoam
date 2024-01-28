@@ -1,0 +1,62 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2106                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version	2.0;
+    format	ascii;
+    class	dictionary;
+    object	waveProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+timeShift           0;
+
+seaLevel            0.4;
+
+seaLevelAsReference true;
+
+relaxationNames     ( leftWall );
+
+initializationName  init;
+
+pName               p_rgh;
+
+leftWallCoeffs
+{
+    waveType            chappelear1962;
+    height              0.071;
+    depth               0.4;
+    direction           ( 1 0 0 );
+    x0                  ( -6 0 0 );
+    L1                  0.072754697;
+    L3                  -0.072829289;
+
+    relaxationZone
+    {
+        relaxationScheme    Spatial;
+        relaxationShape     Rectangular;
+        beachType           Empty;
+        relaxType           INLET;
+        startX              ( -6 0.4 0 );
+        endX                ( 0 0.4 0.6 );
+        orientation         ( 1 0 0 );
+        relaxationWeight    Exponential;
+        exponent            14;
+    }
+}
+
+initCoeffs
+{
+    waveType            potentialCurrent;
+    U                   ( 0 0 0 );
+    Tsoft               0;
+}
+
+
+
+// ************************************************************************* //

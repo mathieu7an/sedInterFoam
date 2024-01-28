@@ -1,0 +1,88 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.7.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSchemes;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+ddtSchemes
+{
+    default         backward;
+}
+
+gradSchemes
+{
+    default         Gauss linear;
+}
+
+divSchemes
+{
+    default         none;
+// alphaEqn
+    div(phi,alphas)  Gauss upwind;
+    div(phir,alphas) Gauss upwind;
+    div(phir,gamma) Gauss linear;
+    div(phi,gamma) Gauss vanLeer;
+// UEqn
+    div((rho*phi.solid),U.solid)    Gauss limitedLinearV 1;
+    div(phi.solid,U.solid) Gauss limitedLinearV 1;
+    div(rhoPhi,U.fluid)    Gauss limitedLinearV 1;
+    div(phi.fluid,U.fluid) Gauss limitedLinearV 1;
+    div(phiRs,Us)   Gauss limitedLinear 1;
+    div(phiRf,Uf)   Gauss limitedLinear 1;
+    div((rho*Rcs)) Gauss linear;
+    div((rhof*Rcf)) Gauss linear;
+    
+// pEqn
+    div(alphas,nu)   Gauss linear;
+// turbulence
+    div(phi.fluid,epsilon.fluid) Gauss limitedLinear 1;
+    div(phi.fluid,k.fluid) Gauss limitedLinear 1;
+    div(alphafPhi.fluid,epsilon.fluid)  Gauss limitedLinear 1; // added 
+    div(alphafPhi.fluid,k.fluid) Gauss limitedLinear 1; //  Added
+    div(alphafPhi.fluid,k.fluid) Gauss limitedLinear 1; //  Added
+    
+
+// ThetaEqn
+    div(phi,Theta)  Gauss limitedLinear 1;
+// alphaPlastic
+    div(phis,alphasPlastic)  Gauss limitedLinear01 1;
+// pa
+    div(phis,ps_new_value)  Gauss limitedLinear 1;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear corrected;
+}
+
+interpolationSchemes
+{
+    default  linear;
+}
+
+snGradSchemes
+{
+    default         corrected;
+}
+
+fluxRequired
+{
+    default         no;
+    p_rgh               ;
+    pcorr;
+    gamma;
+}
+
+
+// ************************************************************************* //

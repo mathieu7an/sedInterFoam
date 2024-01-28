@@ -1,0 +1,17 @@
+Tutorial for using RANS with sedInterFoam (Simulation of the experimental configuration from Sumer et al. 2011)
+
+/!\ swak4Foam needs to be installed to use command funkySetField /!\
+
+1) Mesh creation:
+- blockMesh
+
+3) Initialize fields:
+- cp -r 0_org 0
+- funkySetFields -time 0
+- setWaveField
+
+4) Replace alpha.water and U (needed to initialize the fields with waves2Foam) by gamma and U.flu (used in sedInterFoam)
+- mv 0/alpha.water 0/gamma
+- mv 0/U 0/U.fluid
+
+The case is ready to be decomposed and run in parallel
