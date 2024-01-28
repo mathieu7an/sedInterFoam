@@ -14,6 +14,8 @@ Features
 --------
 A three-dimensional two-phase flow solver with resolution of a free surface, sedInterFoam, has been developed for sediment transport applications. The solver is extended from sedFoam, itself extended from twoPhaseEulerFoam available in the 2.1.0 release of the open-source CFD (computational fluid dynamics) toolbox OpenFOAM.
 
+waves2Foam library needs to be installed to compile sedInterFoam
+
 Installation
 ------------
 
